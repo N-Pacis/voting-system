@@ -29,8 +29,8 @@ void migrateFiles(char *fname1, char *fname2){
 }
 
 void updateVotes(char *str){
-    FILE *in = fopen("candidates.txt", "r");
-    FILE *inTemp = fopen("temp.txt", "r");
+    FILE *in = fopen("storage/candidates.txt", "r");
+    FILE *inTemp = fopen("storage/temp.txt", "r");
 
     char buffer[255];
     char fileBuffer[255];
@@ -122,7 +122,7 @@ void castVote()
 
 void getVotesCount(){
     char fileBuffer[255];
-    FILE *inTemp = fopen("candidates.txt", "r");
+    FILE *inTemp = fopen("storage/candidates.txt", "r");
     while(fgets(fileBuffer,255,inTemp)){
         char *candidate = fileBuffer;
         printf("- %s",candidate);
@@ -131,7 +131,7 @@ void getVotesCount(){
 
 void getLeadingCandidate(){
     char fileBuffer[255];
-    FILE *inTemp = fopen("candidates.txt", "r");
+    FILE *inTemp = fopen("storage/candidates.txt", "r");
     int highestVotes = 0;
     while(fgets(fileBuffer,255,inTemp)){
         char *candidate = strtok(fileBuffer,",");
@@ -151,7 +151,7 @@ void getLeadingCandidate(){
     }
     else{
         fclose(inTemp);
-        FILE *in = fopen("candidates.txt","r");
+        FILE *in = fopen("storage/candidates.txt","r");
         char buffer[255];
         while(fgets(buffer,255,in)){
             char *candidate = strtok(buffer,",");
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
     rewriteToFile("candidate.txt","");
     rewriteToFile("candidate.txt","");
 
-    FILE *fp = fopen("candidates.txt","r");
+    FILE *fp = fopen("storage/candidates.txt","r");
     if (NULL != fp) {
         int size;
         fseek (fp, 0, SEEK_END);
