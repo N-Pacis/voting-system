@@ -29,7 +29,7 @@ void migrateFiles(char *fname1, char *fname2){
 }
 
 void updateVotes(char *str){
-    FILE *in = fopen("../storage/candidates.txt", "r");
+    FILE *in = fopen("../storage/candidates.csv", "r");
     FILE *inTemp = fopen("../storage/temp.txt", "r");
 
     char buffer[255];
@@ -78,13 +78,13 @@ void updateVotes(char *str){
             char *sUpdatedCandidate = strcat(updatedCandidate,"\n");
             saveToFile("../storage/temp.txt",sUpdatedCandidate);
         }
-        rewriteToFile("../storage/candidates.txt","");
+        rewriteToFile("../storage/candidates.csv","");
         while(fgets(fileBuffer,255,inTemp)){
             char *candidate = fileBuffer;
             saveToFile("../storage/candidate.txt",candidate);
         }
     }
-    migrateFiles("../storage/candidate.txt","../storage/candidates.txt");
+    migrateFiles("../storage/candidate.txt","../storage/candidates.csv");
     remove("temp.txt");
     rewriteToFile("../storage/temp.txt","");
 }
@@ -122,7 +122,7 @@ void castVote()
 
 void getVotesCount(){
     char fileBuffer[255];
-    FILE *inTemp = fopen("../storage/candidates.txt", "r");
+    FILE *inTemp = fopen("../storage/candidates.csv", "r");
     while(fgets(fileBuffer,255,inTemp)){
         char *candidate = fileBuffer;
         printf("- %s",candidate);
@@ -131,7 +131,7 @@ void getVotesCount(){
 
 void getLeadingCandidate(){
     char fileBuffer[255];
-    FILE *inTemp = fopen("../storage/candidates.txt", "r");
+    FILE *inTemp = fopen("../storage/candidates.csv", "r");
     int highestVotes = 0;
     while(fgets(fileBuffer,255,inTemp)){
         char *candidate = strtok(fileBuffer,",");
@@ -151,7 +151,7 @@ void getLeadingCandidate(){
     }
     else{
         fclose(inTemp);
-        FILE *in = fopen("../storage/candidates.txt","r");
+        FILE *in = fopen("../storage/candidates.csv","r");
         char buffer[255];
         while(fgets(buffer,255,in)){
             char *candidate = strtok(buffer,",");
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
     rewriteToFile("../storage/candidate.txt","");
     rewriteToFile("../storage/candidate.txt","");
 
-    FILE *fp = fopen("../storage/candidates.txt","r");
+    FILE *fp = fopen("../storage/candidates.csv","r");
     if (NULL != fp) {
         int size;
         fseek (fp, 0, SEEK_END);
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
             for (int i = 0; i < (sizeof(CANDIDATES) / sizeof(CANDIDATES[0])); i++)
             {
                 char *str = strcat(CANDIDATES[i],",0\n");
-                saveToFile("../storage/candidates.txt",str);
+                saveToFile("../storage/candidates.csv",str);
             }        
         }
     }
